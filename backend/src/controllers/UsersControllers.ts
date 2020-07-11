@@ -9,10 +9,20 @@ class UserControllers {
 
     return res.json(users);
   }
-  async show(req: Request, res: Response) {}
+  async show(req: Request, res: Response) {
+    const { id } = req.params;
+
+    await connection('users').where({ id }).first();
+  }
   async create(req: Request, res: Response) {
     const { name, email, password } = req.body;
 
+    const user = await connection('users').where({ email });
+
+    if (user) {
+      return res.status(400).json({ msg: "User already exists" });
+    }
+    
     await connection('users').insert({
       id: generateId(5),
       name,
