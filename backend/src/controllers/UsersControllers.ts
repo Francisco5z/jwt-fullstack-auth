@@ -3,6 +3,8 @@ import { Request, Response } from 'express';
 import connection from '../database';
 import { generateId } from './utils';
 
+import bcrypt from 'bcrypt';
+
 class UserControllers {
   async index(req: Request, res: Response) {
     const users = await connection('users').select('*');
@@ -34,7 +36,7 @@ class UserControllers {
       id,
       name,
       email,
-      password
+      password: await bcrypt.hash(password, 10)
     });
 
     return res.status(200).json({ id: id });

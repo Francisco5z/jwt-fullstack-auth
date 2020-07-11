@@ -1,0 +1,3 @@
+export default {
+  secret: "D6QCRgNrN9QW8r261OmC496N044E1Cl60RWf2BeQA4QuMkG99UUQGCrU593P"
+}
