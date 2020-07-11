@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import connection from '../database';
-import { generateId } from './utils';
+import { generateId, generateToken } from './utils';
 
 import bcrypt from 'bcrypt';
 
@@ -39,7 +39,10 @@ class UserControllers {
       password: await bcrypt.hash(password, 10)
     });
 
-    return res.status(200).json({ id: id });
+    return res.status(200).json({ 
+      id, 
+      token: generateToken({ id }) 
+    });
   }
   async update(req: Request, res: Response) {
     const { id } = req.params;
