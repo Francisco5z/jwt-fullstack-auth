@@ -1,5 +1,9 @@
 import crypto from 'crypto';
 
 export default (length: number) => {
-  return crypto.randomBytes(length).toString('hex');
+  const alfanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".toLowerCase();
+
+  const id = `${alfanum[Math.floor(Math.random() * 10)]}${crypto.randomBytes(length).toString('hex')}`
+  
+  return id
 };

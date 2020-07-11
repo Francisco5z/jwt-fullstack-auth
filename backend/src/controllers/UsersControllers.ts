@@ -6,21 +6,27 @@ import { generateId } from './utils';
 class UserControllers {
   async index(req: Request, res: Response) {
     const users = await connection('users').select('*');
-
+    
     return res.json(users);
   }
   async show(req: Request, res: Response) {
     const { id } = req.params;
 
-    await connection('users').where({ id }).first();
+    const user = await connection('users').where({ id }).first();
+
+    if (!user) {
+      return res.status(404).json({ msg: "user not found" })
+    }
+
+    return res.json(user);
   }
   async create(req: Request, res: Response) {
     const { name, email, password } = req.body;
 
     const user = await connection('users').where({ email });
 
-    if (user) {
-      return res.status(400).json({ msg: "User already exists" });
+    if (!user) {
+      return res.status(400).json({ msg: "user already exists" });
     }
     
     await connection('users').insert({
@@ -42,9 +48,15 @@ class UserControllers {
   async delete(req: Request, res: Response) {
     const { id } = req.params;
 
-    await connection('users').where({ id }).del();
+    const user = await connection('users').where({ id }).first();
 
-    return res.status(200).send()
+    if (!user) {
+      return res.status(404).json({ msg: "user not found" })
+    }
+
+    await connection('users').where({ id: id }).del();
+
+    return res.status(200).send();
   }
 }
 
