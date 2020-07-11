@@ -40,7 +40,7 @@ class UserControllers {
     });
 
     return res.status(200).json({ 
-      id, 
+      user: await connection('users').where('id', id).first(), 
       token: generateToken({ id }) 
     });
   }

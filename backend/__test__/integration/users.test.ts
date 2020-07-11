@@ -17,7 +17,7 @@ describe('Users', () => {
       password: "4587"
     });
 
-    id = response.body.id;
+    id = response.body.user.id;
 
     expect(response.status).toBe(200);
   });
