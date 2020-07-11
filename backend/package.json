@@ -18,7 +18,7 @@
     "sqlite3": "^5.0.0"
   },
   "scripts": {
-    "dev": "nodemon src/server.ts",
-    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest"
+    "dev": "cls && nodemon --ignore __test__ src/server.ts",
+    "knex:migrate": "cls && knex --knexfile knexfile.ts migrate:latest"
   }
 }
